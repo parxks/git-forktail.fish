@@ -7,21 +7,21 @@ consistent "forked + cloned" state, no matter which of the four possible states
 you're currently in. Safe to re-run at any time.
 
 Named after the **forktail** — a small, fast fish whose name literally contains
-the word *fork*.
+the word _fork_.
 
 ## States
 
-| State          | Meaning                                    | Action                                      |
-|----------------|--------------------------------------------|---------------------------------------------|
-| `neither`      | Not forked on GitHub, not cloned locally   | `gh repo fork` + `gh repo clone` + remotes  |
-| `github-only`  | Forked on GitHub, not cloned locally       | `gh repo clone` + remotes                   |
-| `local-only`   | Cloned locally, not forked on GitHub       | `gh repo fork` + remotes + `git push`       |
-| `both`         | Already forked **and** cloned              | Verify + repair remotes                     |
-| `auto`         | *(default)* auto-detect the above          | Whatever detection says                     |
+| State         | Meaning                                  | Action                                     |
+| ------------- | ---------------------------------------- | ------------------------------------------ |
+| `neither`     | Not forked on GitHub, not cloned locally | `gh repo fork` + `gh repo clone` + remotes |
+| `github-only` | Forked on GitHub, not cloned locally     | `gh repo clone` + remotes                  |
+| `local-only`  | Cloned locally, not forked on GitHub     | `gh repo fork` + remotes + `git push`      |
+| `both`        | Already forked **and** cloned            | Verify + repair remotes                    |
+| `auto`        | _(default)_ auto-detect the above        | Whatever detection says                    |
 
 After any state, the repo ends up with the standard fork layout:
 
-- `origin`   → your fork   (`git@github.com:<you>/<repo>.git`)
+- `origin` → your fork (`git@github.com:<you>/<repo>.git`)
 - `upstream` → source repo (`git@github.com:<source>/<repo>.git`)
 
 ## Installation
@@ -29,13 +29,13 @@ After any state, the repo ends up with the standard fork layout:
 ### With [fisher](https://github.com/jorgebucaran/fisher)
 
 ```fish
-fisher install <your-user>/git-forktail
+fisher install parxks/git-forktail
 ```
 
 ### Manually
 
 ```
-git clone https://github.com/<your-user>/git-forktail \
+git clone https://github.com/parxks/git-forktail \
     ~/.config/fish/plugins/git-forktail
 
 for f in ~/.config/fish/plugins/git-forktail/functions/*.fish
@@ -81,21 +81,22 @@ ft [OPTIONS] [STATE]
 
 ### Options
 
-| Flag ↕▾ | Description ↕▾ |
-|---|---|
-| −`-s, --source <REPO>` | Upstream source (owner/repo, URL, or ssh) |
-| `-d, --dest <REPO>` | Destination fork (owner/repo, URL, or ssh) |
-| `-n, --name <NAME>` | Local directory name (default: repo basename) |
-| `-p, --path <DIR>` | Parent directory for the clone (default: `$PWD`) |
-| `--fork-name <NAME>` | Rename the fork on GitHub during creation |
-| `--upstream <NAME>` | Override `upstream` remote name |
-| `--origin <NAME>` | Override `origin` remote name |
-| `--dry-run` | Print actions without executing |
-| `-v, --verbose` | Verbose output |
-| `-q, --quiet` | Errors only |
-| `-V, --version` | Print version |
-| `-h, --help` | Full help |
-| `-u, --usage` | Brief usage |
+| Flag ↕▾                | Description ↕▾                                   |
+| ---------------------- | ------------------------------------------------ |
+| −`-s, --source <REPO>` | Upstream source (owner/repo, URL, or ssh)        |
+| `-d, --dest <REPO>`    | Destination fork (owner/repo, URL, or ssh)       |
+| `-n, --name <NAME>`    | Local directory name (default: repo basename)    |
+| `-p, --path <DIR>`     | Parent directory for the clone (default: `$PWD`) |
+| `--fork-name <NAME>`   | Rename the fork on GitHub during creation        |
+| `--upstream <NAME>`    | Override `upstream` remote name                  |
+| `--origin <NAME>`      | Override `origin` remote name                    |
+| `--dry-run`            | Print actions without executing                  |
+| `-v, --verbose`        | Verbose output                                   |
+| `-q, --quiet`          | Errors only                                      |
+| `-V, --version`        | Print version                                    |
+| `-h, --help`           | Full help                                        |
+| `-u, --usage`          | Brief usage                                      |
+
 ⚙
 
 ### Examples
@@ -119,13 +120,14 @@ ft -s octocat/Hello-World --dry-run
 
 ## Environment variables
 
-| Var ↕▾ | Effect ↕▾ |
-|---|---|
-| −`NO_COLOR` | Disable ANSI colors |
-| −`FT_DEFAULT_SOURCE` | Fallback source repo |
-| `FT_DEFAULT_DEST` | Fallback destination fork |
+| Var ↕▾               | Effect ↕▾                                 |
+| -------------------- | ----------------------------------------- |
+| −`NO_COLOR`          | Disable ANSI colors                       |
+| −`FT_DEFAULT_SOURCE` | Fallback source repo                      |
+| `FT_DEFAULT_DEST`    | Fallback destination fork                 |
 | `FT_UPSTREAM_REMOTE` | Upstream remote name (default `upstream`) |
-| `FT_ORIGIN_REMOTE` | Origin remote name (default `origin`) |
+| `FT_ORIGIN_REMOTE`   | Origin remote name (default `origin`)     |
+
 ⚙
 
 ## Idempotency guarantees
@@ -136,7 +138,7 @@ ft -s octocat/Hello-World --dry-run
 - Remote add / rename / set-url are all guarded by existence checks.
 - `git push -u` is safe to repeat.
 - Any unexpected error aborts the run with a non-zero exit code, leaving the
-repo in a consistent (if partial) state that the next run will repair.
+  repo in a consistent (if partial) state that the next run will repair.
 
 ## Project layout
 
@@ -157,7 +159,7 @@ git-forktail/
 ## Uninstall
 
 ```
-fisher remove <your-user>/git-forktail
+fisher remove parxks/git-forktail
 ```
 
 or manually:
@@ -172,4 +174,3 @@ rm ~/.config/fish/conf.d/git-forktail.fish
 ## License
 
 MIT — see LICENSE.
-
